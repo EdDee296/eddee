@@ -10,6 +10,7 @@ import {
   canva,
   reactjs,
   c,
+  cpp,
   tailwind,
   git,
   python,
@@ -18,6 +19,7 @@ import {
   forum,
   vanloc,
   pre,
+  cosmic,
   threejs,
   githubicon,
   r,
@@ -98,7 +100,6 @@ const technologies = [
     name: "Tailwind CSS", //row 3
     icon: tailwind,
   },
-  
   {
     name: "Three JS",
     icon: threejs,
@@ -126,6 +127,10 @@ const technologies = [
   {
     name: "R",
     icon: r,
+  },
+  {
+    name: "C++",
+    icon: cpp,
   }
 ];
 
@@ -198,6 +203,22 @@ const projects = [
     ],
     image: pre,
     source_code_link: "https://github.com/EdDee296/Pre",
+  },
+  {
+    name: "Cosmic",
+    description: "A website to help organizations connect with collaborators when working on an open science project.",
+    tags: [
+      {
+        name: "python",
+        color: "blue-text-gradient",
+      },
+      {
+        name: "django",
+        color: "green-text-gradient",
+      },
+    ],
+    image: cosmic,
+    source_code_link: "https://github.com/EdDee296/SpaceAppsChallenge",
   },
   
 ];

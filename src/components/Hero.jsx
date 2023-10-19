@@ -1,11 +1,12 @@
 import { styles } from "../styles";
-
+import ys from "../assets/dream drag (dark).mp4"
+import cv from "../assets/David Pham.pdf";
 const Hero = () => {
   return (
     <section className={`relative w-full sm:w-auto mx-auto`}>
       <div className=" absolute w-full h-full bg-violet-900 opacity-60 "/>
       <div className="bg-cover object-cover">
-        <video className=" w-full h-full " src="/yas-animated back/dream drag (dark).mp4" autoPlay loop muted />
+        <video className=" w-full h-full " src={ys} autoPlay loop muted />
       </div>
 
       <div
@@ -31,7 +32,7 @@ const Hero = () => {
                 Read more
               </button>
           </a>
-          <a href='/cv.pdf' download className="sm:inline hidden">
+          <a href={cv} download className="sm:inline hidden">
             <button  className=" ml-5 bg-transparent hover:bg-violet-500 text-violet-300 font-semibold hover:text-white py-4 px-4 border border-violet-500 hover:border-transparent rounded">
                 Download CV
             </button>

@@ -10,6 +10,7 @@ import emer from "./rank/emer.png";
 
 import css from "./tech/css.png";
 import c from "./tech/c.png";
+import cpp from "./tech/cpp.png";
 import git from "./tech/git.png";
 import html from "./tech/html.png";
 import javascript from "./tech/javascript.png";
@@ -29,6 +30,7 @@ import grn from "./company/grn.png";
 import tae from "./company/tae.png";
 
 import pre from "./project/pre.png";
+import cosmic from "./project/cosmic.png";
 
 export {
   logo,
@@ -38,6 +40,7 @@ export {
   css,
   python,
   c,
+  cpp,
   canva,
   r,
   git,
@@ -50,6 +53,7 @@ export {
   typescript,
   threejs,
   pre,
+  cosmic,
   tae,
   grn,
   forum,
