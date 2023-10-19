@@ -73,7 +73,7 @@ const services = [
 
 const technologies = [
   {
-    name: "HTML 5", // row 1
+    name: "HTML", //row 1
     icon: html,
   },
   {
@@ -104,10 +104,7 @@ const technologies = [
     name: "Three JS",
     icon: threejs,
   },
-  {
-    name: "Canva",
-    icon: canva,
-  },
+
   {
     name: "CSS", // row 4
     icon: css,
