@@ -29,7 +29,7 @@ import forum from "./company/forum.png";
 import grn from "./company/grn.png";
 import tae from "./company/tae.png";
 
-import pre from "./project/pre.png";
+import pre from "./project/Pre.png";
 import cosmic from "./project/cosmic.png";
 
 export {
