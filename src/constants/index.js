@@ -7,7 +7,6 @@ import {
   typescript,
   html,
   css,
-  canva,
   reactjs,
   c,
   cpp,
@@ -20,6 +19,7 @@ import {
   vanloc,
   pre,
   cosmic,
+  ayo,
   threejs,
   githubicon,
   r,
@@ -216,6 +216,22 @@ const projects = [
     ],
     image: cosmic,
     source_code_link: "https://github.com/EdDee296/SpaceAppsChallenge",
+  },
+  {
+    name: "Ayo Catch 'em",
+    description: "A game to help improve your reaction time.",
+    tags: [
+      {
+        name: "C#",
+        color: "blue-text-gradient",
+      },
+      {
+        name: "Unity",
+        color: "green-text-gradient",
+      },
+    ],
+    image: ayo,
+    source_code_link: "https://github.com/EdDee296/Ayo-Catch-em",
   },
   
 ];

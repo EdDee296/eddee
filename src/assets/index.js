@@ -31,6 +31,7 @@ import tae from "./company/tae.png";
 
 import pre from "./project/Pre.png";
 import cosmic from "./project/cosmic.png";
+import ayo from "./project/ayocatchem.png";
 
 export {
   logo,
@@ -54,6 +55,7 @@ export {
   threejs,
   pre,
   cosmic,
+  ayo,
   tae,
   grn,
   forum,
