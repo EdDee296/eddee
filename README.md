@@ -1,2 +1,2 @@
 # Portfolio
- My portfolio: [eddee.me] (eddee.me)
+ My portfolio: [eddee.me](url)
