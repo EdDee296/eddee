@@ -18,9 +18,12 @@ import {
   forum,
   vanloc,
   pre,
+  aot,
+  sparrer,
+  nxc,
   cosmic,
   ayo,
-  threejs,
+  java,
   githubicon,
   r,
   blender,
@@ -60,7 +63,7 @@ const services = [
     background: "bg-gradient-to-t from-red-500 to-orange-300",
   },
   {
-    title: "React Native Developer",
+    title: "React / React Native Developer",
     icon: diamond,
     background: "bg-gradient-to-t bg-gradient-to-t from-purple-200 to-blue-500",
   },
@@ -101,8 +104,8 @@ const technologies = [
     icon: tailwind,
   },
   {
-    name: "Three JS",
-    icon: threejs,
+    name: "Java",
+    icon: java,
   },
 
   {
@@ -182,9 +185,47 @@ const experiences = [
   }
 ];
 
-
-
 const projects = [
+  {
+    name: "Sparrer",
+    description: "A fullstack cross-platform app for boxers to find their sparring partner",
+    tags: [
+      {
+        name: "typescript",
+        color: "blue-text-gradient",
+      },
+      {
+        name: "firebase",
+        color: "green-text-gradient",
+      },
+      {
+        name: "react native",
+        color: "text-red-700",
+      },
+    ],
+    image: sparrer,
+    source_code_link: "https://github.com/EdDee296/Sparrer",
+  },
+  {
+    name: "Nx-C",
+    description: "Generate a Sequential ML modal without writing a single line of code",
+    tags: [
+      {
+        name: "python",
+        color: "blue-text-gradient",
+      },
+      {
+        name: "tensorflow",
+        color: "green-text-gradient",
+      },
+      {
+        name: "tkinter",
+        color: "text-amber-400",
+      },
+    ],
+    image: nxc,
+    source_code_link: "https://github.com/EdDee296/NxC",
+  },
   {
     name: "Pre",
     description: "A game for practicing your aiming skill in FPS games.",
@@ -232,6 +273,22 @@ const projects = [
     ],
     image: ayo,
     source_code_link: "https://github.com/EdDee296/Ayo-Catch-em",
+  },
+  {
+    name: "3D_Maneuver_Gear-UE5",
+    description: "First person 3d maneuver gear (from Attack on Titan) made in Unreal Engine 5",
+    tags: [
+      {
+        name: "C++",
+        color: "blue-text-gradient",
+      },
+      {
+        name: "UE5",
+        color: "green-text-gradient",
+      },
+    ],
+    image: aot,
+    source_code_link: "https://github.com/EdDee296/3D_Maneuver_Gear-UE5",
   },
   
 ];

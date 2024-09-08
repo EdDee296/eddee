@@ -19,7 +19,7 @@ import reactjs from "./tech/reactjs.png";
 import canva from "./tech/canva.png";
 import tailwind from "./tech/tailwind.png";
 import typescript from "./tech/typescript.png";
-import threejs from "./tech/threejs.svg";
+import java from "./tech/java.png";
 import python from "./tech/python.png";
 import r from "./tech/r.png";
 import githubicon from "./tech/github.png";
@@ -30,6 +30,9 @@ import grn from "./company/grn.png";
 import tae from "./company/tae.png";
 
 import pre from "./project/Pre.png";
+import sparrer from "./project/sparrer.png";
+import aot from "./project/aot.png";
+import nxc from "./project/nxc.png";
 import cosmic from "./project/cosmic.png";
 import ayo from "./project/ayocatchem.png";
 
@@ -52,8 +55,11 @@ export {
   reactjs,
   tailwind,
   typescript,
-  threejs,
+  java,
   pre,
+  sparrer,
+  nxc,
+  aot,
   cosmic,
   ayo,
   tae,
