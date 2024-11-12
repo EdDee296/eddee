@@ -14,14 +14,15 @@ import {
   git,
   python,
   tae,
-  grn,
   forum,
   vanloc,
+  uofa,
   pre,
   aot,
   sparrer,
   nxc,
   cosmic,
+  coiny,
   ayo,
   java,
   githubicon,
@@ -53,22 +54,22 @@ export const navLinks = [
 
 const services = [
   {
-    title: "Web Developer",
+    title: "Web Developer - Full Stack",
     icon: challenger,
     background: "bg-gradient-to-t from-blue-500 to-gray-300",
   },
   {
-    title: "Game Developer",
+    title: "Mobile Developer - Full Stack",
     icon: grmaster,
     background: "bg-gradient-to-t from-red-500 to-orange-300",
   },
   {
-    title: "React / React Native Developer",
+    title: "AI/ Machine Learning",
     icon: diamond,
     background: "bg-gradient-to-t bg-gradient-to-t from-purple-200 to-blue-500",
   },
   {
-    title: "Frontend Developer",
+    title: "Game Developer",
     icon: emer,
     background: "bg-gradient-to-t from-blue-200 to-green-600",
   },
@@ -136,6 +137,17 @@ const technologies = [
 
 const experiences = [
   {
+    title: "Teaching Assistant",
+    company_name: "Department of Mathematical and Statistical Sciences, University of Alberta",
+    icon: uofa,
+    iconBg: "#FFFFFF",
+    date: "Sep 2024 - Dec 2024",
+    points: [
+      "Aid the lead teacher by answering students’ questions, and assisting more than 1000 students with assignments.",
+      "Grading students’ works and give feedbacks.",
+    ],
+  },
+  {
     title: "Cashier",
     company_name: "Van Loc Vietnamese Submarine Shop",
     icon: vanloc,
@@ -160,18 +172,6 @@ const experiences = [
     ],
   },
   ,
-  {
-    title: "Volunteer",
-    company_name: "Green Cleaning Project",
-    icon: grn,
-    iconBg: "#89dde0",
-    date: "Feb 2022 - Dec 2022",
-    points: [
-      "Cleaning all the areas around the city.",
-      "Hosting many events to raise people awareness of keeping the environment clean.",
-      "Donating to charity to help disabled children.",
-    ],
-  },
   {
     title: "Teaching Assistant",
     company_name: "Taekwondo class",
@@ -205,6 +205,29 @@ const projects = [
     ],
     image: sparrer,
     source_code_link: "https://github.com/EdDee296/Sparrer",
+  },{
+    name: "Coiny",
+    description: "An AI-powered app that identifies coins from photos, provides details  connects you to the best prices online, and helps you effortlessly manage your collection.",
+    tags: [
+      {
+        name: "React.js",
+        color: "blue-text-gradient",
+      },
+      {
+        name: "Node.js",
+        color: "green-text-gradient",
+      },
+      {
+        name: "Firebase",
+        color: "text-amber-400",
+      },
+      {
+        name: "OpenAI Vision API",
+        color: "text-amber-800",
+      },
+    ],
+    image: coiny,
+    source_code_link: "https://github.com/EdDee296/coiny",
   },
   {
     name: "Nx-C",

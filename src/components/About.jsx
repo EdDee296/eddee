@@ -44,10 +44,10 @@ const About = () => {
       </motion.div>
       <motion.p
         variants={fadeIn("", "", 0.1, 1)}
-        className='mt-4 text-secondary text-[17px] max-w-3xl leading-[30px]'
+        className='mt-4 text-white text-[17px] max-w-3xl leading-[30px]'
       >
-        I'm currently a second year student at University of Alberta, majoring in Computing Science (Honors program). 
-        I've been programming for 2 years with multiple languages and frameworks. 
+        I'm currently a third year student at University of Alberta, majoring in Computing Science (Honors program). 
+        I've been programming for more than 3 years with multiple languages and frameworks, right now I'm interested the most in AI and Machine Learning. 
         I'm a quick learner and hardworking. As a programmer, my biggest goal is to
         create efficient, scalable, and user-friendly solutions that solve
         real-world problems. 

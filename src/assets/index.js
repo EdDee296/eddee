@@ -26,7 +26,7 @@ import githubicon from "./tech/github.png";
 
 import vanloc from "./company/vanloc.png";
 import forum from "./company/forum.png";
-import grn from "./company/grn.png";
+import uofa from "./company/uofa.png";
 import tae from "./company/tae.png";
 
 import pre from "./project/Pre.png";
@@ -35,6 +35,7 @@ import aot from "./project/aot.png";
 import nxc from "./project/nxc.png";
 import cosmic from "./project/cosmic.png";
 import ayo from "./project/ayocatchem.png";
+import coiny from "./project/coiny.png";
 
 export {
   logo,
@@ -60,12 +61,13 @@ export {
   sparrer,
   nxc,
   aot,
+  coiny,
   cosmic,
   ayo,
   tae,
-  grn,
   forum,
   vanloc,
+  uofa,
   emer,
   diamond,
   challenger,
