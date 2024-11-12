@@ -207,7 +207,7 @@ const projects = [
     source_code_link: "https://github.com/EdDee296/Sparrer",
   },{
     name: "Coiny",
-    description: "An AI-powered app that identifies coins from photos, provides details  connects you to the best prices online, and helps you effortlessly manage your collection.",
+    description: "DevelopEd 3.0 Winner! An AI-powered app that identifies coins from photos, provides details connects you to the best prices online, and helps you effortlessly manage your collection.",
     tags: [
       {
         name: "React.js",
