@@ -32,11 +32,11 @@ const Hero = () => {
                 Read more
               </button>
           </a>
-          <a href={cv} download className="sm:inline hidden">
+          {/* <a href={cv} download className="sm:inline hidden">
             <button  className=" ml-5 bg-transparent hover:bg-violet-500 text-violet-300 font-semibold hover:text-white py-4 px-4 border border-violet-500 hover:border-transparent rounded">
                 Download CV
             </button>
-          </a>
+          </a> */}
         </div>
       </div>
     </section>
