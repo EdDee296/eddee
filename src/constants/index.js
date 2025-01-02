@@ -28,6 +28,7 @@ import {
   githubicon,
   r,
   blender,
+  superstars,
 } from "../assets";
 
 
@@ -136,6 +137,19 @@ const technologies = [
 ];
 
 const experiences = [
+  {
+    title: "Software Engineer Intern",
+    company_name: "Superstars Inc.",
+    icon: superstars,
+    iconBg: "#FFFFFF",
+    date: "Dec 2024 - Present",
+    points: [
+      "Enhanced the SUPERSTARS platform by improving UI responsiveness, reducing job application time by 30%, and boosting engagement by 25% through optimized Angular components.",
+      "Ensured 99.9% system reliability by testing and integrating 20+ APIs using Postman, enabling seamless video resume processing.",
+      "Collaborated with a cross-functional team to reduce user friction and improve workflow efficiency, delivering key features aligned with business goals.",
+      "Built a scalable system capable of processing 500+ video uploads per day, ensuring smooth performance and readiness for future growth.",
+    ],
+  },
   {
     title: "Teaching Assistant",
     company_name: "Department of Mathematical and Statistical Sciences, University of Alberta",

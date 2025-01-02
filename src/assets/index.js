@@ -28,6 +28,7 @@ import vanloc from "./company/vanloc.png";
 import forum from "./company/forum.png";
 import uofa from "./company/uofa.png";
 import tae from "./company/tae.png";
+import superstars from "./company/superstars.png";
 
 import pre from "./project/Pre.png";
 import sparrer from "./project/sparrer.png";
@@ -66,6 +67,7 @@ export {
   ayo,
   tae,
   forum,
+  superstars,
   vanloc,
   uofa,
   emer,
