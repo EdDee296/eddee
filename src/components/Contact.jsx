@@ -134,21 +134,16 @@ const Contact = () => {
         <YasuoCanvas />
       </motion.div>
 
-      <a target="_blank" href='https://www.instagram.com/dav1d.ph/?theme=dark' >
-            <button  className=" fixed top-40 left-0 bg-gradient-to-r from-purple-500 to-pink-500 w-5 sm:w-20 pl-0 py-0 sm:pl-5 sm:py-5 rounded z-200">
-               <img src={ins} className="w-5 sm:w-10 bg-pink rounded justify-center place-content-center"/>
-            </button>
-          </a>
-          <a target="_blank" href='https://github.com/EdDee296' >
-            <button  className=" fixed top-60 left-0 bg-black w-5 sm:w-20 pl-0 py-0 sm:pl-5 sm:py-5 rounded mt-0">
-            <img src={github} className="w-5 sm:w-10 bg-pink rounded"/>
-            </button>
-          </a>
-          <a target="_blank" href='https://www.linkedin.com/in/david-pham-a65022255/' >
-            <button  className=" fixed top-80 left-0 bg-gradient-to-r from-blue-500 to-blue-100 w-5 sm:w-20 pl-0 py-0 sm:pl-5 sm:py-5 rounded mt-0">
-            <img src={linkedin} className="w-5 sm:w-10 bg-pink rounded"/>
-            </button>
-          </a> 
+      <a target="_blank" href='https://github.com/EdDee296' >
+        <button  className=" fixed top-40 left-0 bg-black w-5 sm:w-20 pl-0 py-0 sm:pl-5 sm:py-5 rounded mt-0">
+        <img src={github} className="w-5 sm:w-10 bg-pink rounded"/>
+        </button>
+      </a>
+      <a target="_blank" href='https://www.linkedin.com/in/david-pham-a65022255/' >
+        <button  className=" fixed top-60 left-0 bg-gradient-to-r from-blue-500 to-blue-100 w-5 sm:w-20 pl-0 py-0 sm:pl-5 sm:py-5 rounded mt-0">
+        <img src={linkedin} className="w-5 sm:w-10 bg-pink rounded"/>
+        </button>
+      </a> 
     </div>
   );
 };
