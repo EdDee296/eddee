@@ -65,7 +65,7 @@ const services = [
     background: "bg-gradient-to-t from-red-500 to-orange-300",
   },
   {
-    title: "AI/ Machine Learning",
+    title: "AI/Machine Learning",
     icon: diamond,
     background: "bg-gradient-to-t bg-gradient-to-t from-purple-200 to-blue-500",
   },
