@@ -31,9 +31,6 @@ import {
   superstars,
 } from "../assets";
 
-
-
-
 export const navLinks = [
   {
     id: "about",
@@ -46,6 +43,10 @@ export const navLinks = [
   {
     id: "projects",
     title: "Projects",
+  },
+  {
+    id: "blog",
+    title: "Blog",
   },
   {
     id: "contact",
@@ -189,6 +190,15 @@ const experiences = [
   }
 ];
 
+const blogPosts = [
+    {
+      title: "My Journey into AI and Machine Learning",
+      description: "Exploring the fascinating world of artificial intelligence and how it's shaping the future of technology. From neural networks to computer vision applications.",
+      link: "/blog/ai-journey.html", // This will be your HTML page
+      isExternal: false
+    }
+  ];
+
 const projects = [
   {
     name: "Sparrer",
@@ -320,4 +330,4 @@ const projects = [
   
 ];
 
-export { services, technologies, experiences, projects };
+export { services, technologies, experiences, projects, blogPosts };

@@ -1,6 +1,5 @@
 import { styles } from "../styles";
 import ys from "../assets/dream drag (dark).mp4"
-import cv from "../assets/David Pham.pdf";
 const Hero = () => {
   return (
     <section className={`relative w-full sm:w-auto mx-auto`}>
@@ -22,7 +21,7 @@ const Hero = () => {
             Supp, I'm <span className='text-[#915EFF]'>David</span>
           </h1>
           <p className={`${styles.heroSubText} mt-2 text-white-100`}>
-            I build stuff I wish existed — 
+            I build stuff I wish existed 
             <span className='sm:block hidden'>mostly software (for now) 🙂</span>
           </p>
           <br/>

@@ -5,6 +5,7 @@ import About from "./About";
 import Tech from "./Tech";
 import Experience from "./Experience";
 import Works from "./Works";
+import Blog from "./Blog";
 import Contact from "./Contact";
 import CanvasLoader from "./Loader";
 
@@ -16,6 +17,7 @@ export {
   Tech,
   Experience,
   Works,
+  Blog,
   Contact,
   CanvasLoader,
   YasuoCanvas,

@@ -18,12 +18,54 @@ const Navbar = () => {
       } else {
         setScrolled(false);
       }
+
+      // Check which section is currently in view
+      const sections = navLinks.map(link => document.getElementById(link.id)).filter(Boolean);
+      
+      // Find the section that's most visible in the viewport
+      let currentSection = null;
+      let maxVisibleHeight = 0;
+      
+      sections.forEach(section => {
+        const rect = section.getBoundingClientRect();
+        const viewportHeight = window.innerHeight;
+        
+        // Calculate how much of the section is visible
+        const visibleTop = Math.max(0, Math.min(rect.bottom, viewportHeight) - Math.max(rect.top, 0));
+        const visibleHeight = Math.max(0, visibleTop);
+        
+        // Consider a section "current" if it's significantly visible
+        if (visibleHeight > maxVisibleHeight && rect.top < viewportHeight / 2) {
+          maxVisibleHeight = visibleHeight;
+          currentSection = section;
+        }
+      });
+
+      if (currentSection) {
+        const currentNav = navLinks.find(link => link.id === currentSection.id);
+        if (currentNav && active !== currentNav.title) {
+          setActive(currentNav.title);
+        }
+      } else if (scrollTop < 150) {
+        // If we're at the top of the page, clear active state
+        setActive("");
+      }
     };
 
-    window.addEventListener("scroll", handleScroll);
+    // Add a small delay to prevent rapid state changes when scrolling
+    let timeoutId;
+    const debouncedHandleScroll = () => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(handleScroll, 50);
+    };
 
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    window.addEventListener("scroll", debouncedHandleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", debouncedHandleScroll);
+      clearTimeout(timeoutId);
+    };
+  }, [active]);
 
   return (
     <nav
@@ -55,7 +97,14 @@ const Navbar = () => {
               className={`${
                 active === nav.title ? "text-white" : "text-secondary"
               } hover:text-white text-[18px] font-medium cursor-pointer`}
-              onClick={() => setActive(nav.title)}
+              onClick={() => {
+                setActive(nav.title);
+                // Smooth scroll to the section
+                const element = document.getElementById(nav.id);
+                if (element) {
+                  element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+              }}
             >
               <a href={`#${nav.id}`}>{nav.title}</a>
             </li>
@@ -85,6 +134,11 @@ const Navbar = () => {
                   onClick={() => {
                     setToggle(!toggle);
                     setActive(nav.title);
+                    // Smooth scroll to the section
+                    const element = document.getElementById(nav.id);
+                    if (element) {
+                      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
                   }}
                 >
                   <a href={`#${nav.id}`}>{nav.title}</a>
