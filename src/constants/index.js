@@ -41,7 +41,7 @@ export const navLinks = [
   },
   {
     id: "work",
-    title: "Work",
+    title: "Experience",
   },
   {
     id: "projects",
@@ -142,7 +142,7 @@ const experiences = [
     company_name: "Superstars Inc.",
     icon: superstars,
     iconBg: "#FFFFFF",
-    date: "Dec 2024 - Present",
+    date: "Dec 2024 - May 2025",
     points: [
       "Enhanced the SUPERSTARS platform by improving UI responsiveness, reducing job application time by 30%, and boosting engagement by 25% through optimized Angular components.",
       "Ensured 99.9% system reliability by testing and integrating 20+ APIs using Postman, enabling seamless video resume processing.",
@@ -151,15 +151,17 @@ const experiences = [
     ],
   },
   {
-    title: "Teaching Assistant",
-    company_name: "Department of Mathematical and Statistical Sciences, University of Alberta",
-    icon: uofa,
-    iconBg: "#FFFFFF",
-    date: "Sep 2024 - Dec 2024",
-    points: [
-      "Aid the lead teacher by answering students’ questions, and assisting more than 1000 students with assignments.",
-      "Grading students’ works and give feedbacks.",
-    ],
+  title: "Teaching Assistant",
+  company_name: "Department of Computing Science, University of Alberta",
+  icon: uofa,
+  iconBg: "#FFFFFF",
+  date: "Sep 2024 - May 2025",
+  points: [
+    "Guided students through foundational C programming topics, including memory management, pointers, and data structures.",
+    "Held lab sessions and office hours to support students with debugging, problem-solving, and Unix tools like gdb and valgrind.",
+    "Reviewed and graded assignments with constructive feedback to improve code quality and understanding.",
+    "Collaborated with the course instructor to ensure grading consistency and student success.",
+  ],
   },
   {
     title: "Cashier",
@@ -183,18 +185,6 @@ const experiences = [
       "Participating in testing students' english levels and provide feedbacks.",
       "Training and guiding new examiners.",
       "Collaborating with other people to create tests.",
-    ],
-  },
-  ,
-  {
-    title: "Teaching Assistant",
-    company_name: "Taekwondo class",
-    icon: tae,
-    iconBg: "#FFFFFF",
-    date: "Jan 2018 - Nov 2019",
-    points: [
-      "Single-handedly supervising a group of students up to 15 individuals.",
-      "Learned how to multitask.",
     ],
   }
 ];

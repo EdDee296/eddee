@@ -6,7 +6,6 @@ import { styles } from "../styles";
 import { YasuoCanvas } from "./canvas";
 import { SectionWrapper } from "../hoc";
 import { slideIn } from "../utils/motion";
-import ins from "../assets/social/ins.png";
 import github from "../assets/social/github.png";
 import linkedin from "../assets/social/linkedin.png";
 

@@ -40,17 +40,15 @@ const About = () => {
     <div className={`relative w-full mx-0`}>
       <motion.div variants={textVariant()}>
         <p className={styles.sectionSubText}>Introduction</p>
-        <h2 className={styles.sectionHeadText}>Overview.</h2>
+        <h2 className={styles.sectionHeadText}>Overview</h2>
       </motion.div>
       <motion.p
         variants={fadeIn("", "", 0.1, 1)}
         className='mt-4 text-white text-[17px] max-w-3xl leading-[30px]'
       >
-        I'm currently a third year student at University of Alberta, majoring in Computing Science (Honors program). 
-        I've been programming for more than 3 years with multiple languages and frameworks, right now I'm interested the most in AI and Machine Learning. 
-        I'm a quick learner and hardworking. As a programmer, my biggest goal is to
-        create efficient, scalable, and user-friendly solutions that solve
-        real-world problems. 
+        I'm currently a third-year Computing Science (Honors) student at the University of Alberta with a passion for robotics, computer vision, and detection technologies.
+        With over three years of programming experience, I focus on building intelligent systems that solve real-world problems. 
+        I'm driven, fast-learning, and love turning complex ideas into scalable, practical solutions. 
       </motion.p>
       <div className='mt-20 flex flex-wrap gap-10'>
         {services.map((service, index) => (
