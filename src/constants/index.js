@@ -192,9 +192,9 @@ const experiences = [
 
 const blogPosts = [
     {
-      title: "My Journey into AI and Machine Learning",
-      description: "Exploring the fascinating world of artificial intelligence and how it's shaping the future of technology. From neural networks to computer vision applications.",
-      link: "/blog/ai-journey.html", // This will be your HTML page
+      title: 'How I created a "Cheating Tool" for Leageue of Legends',
+      description: "A computer vision tool that analyzes League of Legends gameplay in real-time to detect, track, and report enemy champion movements on the minimap, providing tactical positioning information through a WebSocket interface.",
+      link: "/blog/rift-recon.html", 
       isExternal: false
     }
   ];

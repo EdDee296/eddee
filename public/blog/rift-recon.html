@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How I Created a "Cheating Tool" for League of Legends - EdDee Blog</title>
+    <link rel="icon" type="image/svg+xml" href="/src/assets/icon.svg/tornado.svg" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #050816 0%, #151030 100%);
+            color: #f3f3f3;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 0.5rem 1rem;
+            background: #915EFF;
+            color: white;
+            text-decoration: none;
+            border-radius: 0.5rem;
+            transition: background 0.3s;
+        }
+        
+        .back-btn:hover {
+            background: #7c3aed;
+        }
+        
+        .blog-header {
+            margin-bottom: 3rem;
+            border-bottom: 1px solid #333;
+            padding-bottom: 2rem;
+        }
+        
+        .blog-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, #915EFF 0%, #f12711 50%, #f5af19 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .blog-meta {
+            color: #aaa6c3;
+            font-size: 1rem;
+        }
+        
+        .blog-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        .blog-content h2 {
+            font-size: 1.8rem;
+            margin: 2rem 0 1rem 0;
+            color: #915EFF;
+        }
+        
+        .blog-content h3 {
+            font-size: 1.4rem;
+            margin: 1.5rem 0 0.5rem 0;
+            color: #f5af19;
+        }
+        
+        .blog-content p {
+            margin-bottom: 1.5rem;
+        }
+        
+        .blog-content ul, .blog-content ol {
+            margin: 1rem 0 1.5rem 2rem;
+        }
+        
+        .blog-content li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .blog-content code {
+            background: #1f1a3a;
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .blog-content pre {
+            background: #1f1a3a;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        
+        .toc {
+            background: #1f1a3a;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            margin: 2rem 0;
+            border-left: 4px solid #915EFF;
+        }
+        
+        .toc h3 {
+            color: #915EFF;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        .toc ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .toc li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .toc a {
+            color: #f3f3f3;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .toc a:hover {
+            color: #915EFF;
+        }
+        
+        .warning-box {
+            background: rgba(241, 39, 17, 0.1);
+            border: 1px solid #f12711;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .warning-box h4 {
+            color: #f12711;
+            margin-bottom: 0.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .blog-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/?scrollTo=blog" class="back-btn">← Back to Portfolio</a>
+        
+        <header class="blog-header">
+            <h1 class="blog-title">How I Created a "Cheating Tool" for League of Legends</h1>
+            <div class="blog-meta">
+                Published on January 15, 2025 by David Pham
+            </div>
+        </header>
+        
+        <article class="blog-content">
+            <div class="warning-box">
+                <h4>⚠️ Educational Purposes Only</h4>
+                <p>This project was created purely for educational purposes to explore computer vision and real-time data processing. It was never used in actual gameplay and is not intended to provide unfair advantages.</p>
+            </div>
+
+            <h2 id="intro">Introduction</h2>
+            <p>
+                Rift Recon is a computer vision tool I developed that analyzes League of Legends gameplay in real-time. 
+                The system detects, tracks, and reports enemy champion movements on the minimap, providing tactical 
+                positioning information through a WebSocket interface. While the name might suggest otherwise, this 
+                project was born from curiosity about computer vision applications in gaming environments rather than 
+                any desire to gain unfair advantages.
+            </p>
+            
+            <p>
+                What started as a simple experiment in object detection evolved into a comprehensive system that 
+                combines real-time image processing, machine learning, and network communication. The project 
+                challenged me to work with frame-perfect timing, optimize performance for real-time processing, 
+                and create a robust detection system that could handle the dynamic nature of a live game.
+            </p>
+
+            <h2 id="background">Background</h2>
+            <p>
+                League of Legends is a multiplayer online battle arena (MOBA) game where map awareness and champion 
+                positioning are crucial for success. The minimap provides essential information about enemy locations, 
+                but only when enemies are visible to your team. This limitation creates interesting technical challenges 
+                for computer vision applications.
+            </p>
+            
+            <p>
+                The idea for Rift Recon came from my interest in real-time computer vision and the technical challenge 
+                of processing live game footage. I wanted to explore how accurately I could detect and track moving 
+                objects in a dynamic environment with consistent lighting, colors, and visual elements - making it 
+                an ideal testbed for computer vision algorithms.
+            </p>
+
+            <div class="toc">
+                <h3>📋 Table of Contents</h3>
+                <ul>
+                    <li><a href="#intro">Introduction</a></li>
+                    <li><a href="#background">Background</a></li>
+                    <li><a href="#architecture">System Architecture</a></li>
+                    <li><a href="#detection">Champion Detection Algorithm</a></li>
+                    <li><a href="#tracking">Real-time Tracking Implementation</a></li>
+                    <li><a href="#websocket">WebSocket Communication</a></li>
+                    <li><a href="#performance">Performance Optimization</a></li>
+                    <li><a href="#challenges">Technical Challenges</a></li>
+                    <li><a href="#lessons">Lessons Learned</a></li>
+                    <li><a href="#conclusion">Conclusion</a></li>
+                </ul>
+            </div>
+
+            <h2 id="architecture">System Architecture</h2>
+            <p>
+                The Rift Recon system consists of several interconnected components working together to provide 
+                real-time champion detection and tracking. The architecture was designed with modularity and 
+                performance in mind, allowing each component to be optimized independently.
+            </p>
+            
+            <p>
+                At its core, the system captures screen data, processes it through computer vision algorithms, 
+                and communicates findings through a WebSocket interface. The modular design allows for easy 
+                testing and improvement of individual components without affecting the entire system.
+            </p>
+
+            <h2 id="detection">Champion Detection Algorithm</h2>
+            <p>
+                The heart of Rift Recon lies in its champion detection algorithm. Using a combination of template 
+                matching and feature detection, the system can identify champion icons on the minimap with high 
+                accuracy. The algorithm accounts for different champion skins, varying icon sizes, and the 
+                dynamic lighting effects that occur during gameplay.
+            </p>
+            
+            <p>
+                One of the key innovations was developing a robust template database that could handle the visual 
+                variations in champion appearances while maintaining fast processing speeds. The detection pipeline 
+                processes each frame in under 16ms to maintain real-time performance.
+            </p>
+
+            <h2 id="tracking">Real-time Tracking Implementation</h2>
+            <p>
+                Once champions are detected, the tracking system maintains their positions across frames, predicting 
+                movement patterns and handling occlusion scenarios. The tracking algorithm uses Kalman filters to 
+                smooth position data and predict future locations, helping maintain consistency even when detection 
+                temporarily fails.
+            </p>
+            
+            <p>
+                The tracking system also implements intelligent logic to distinguish between different champion 
+                types and associate detected objects with specific players, creating a comprehensive picture of 
+                the battlefield state.
+            </p>
+
+            <h2 id="websocket">WebSocket Communication</h2>
+            <p>
+                To make the detected information accessible, Rift Recon implements a WebSocket server that broadcasts 
+                real-time positioning data. This allows external applications to receive live updates about champion 
+                positions, movement patterns, and other tactical information.
+            </p>
+            
+            <p>
+                The communication protocol was designed to be lightweight and efficient, transmitting only essential 
+                data to minimize latency. The WebSocket implementation supports multiple concurrent connections and 
+                includes error handling for robust operation.
+            </p>
+
+            <h2 id="performance">Performance Optimization</h2>
+            <p>
+                Achieving real-time performance required extensive optimization throughout the system. Key improvements 
+                included implementing multi-threading for parallel processing, optimizing computer vision algorithms 
+                for speed, and reducing memory allocations in critical paths.
+            </p>
+            
+            <p>
+                The final system can process full-resolution game footage at 60+ FPS while maintaining detection 
+                accuracy above 95%. Memory usage was optimized to prevent garbage collection pauses that could 
+                impact real-time performance.
+            </p>
+
+            <h2 id="challenges">Technical Challenges</h2>
+            <p>
+                Developing Rift Recon presented numerous technical challenges, from handling varying game conditions 
+                to optimizing for real-time performance. Some of the most significant challenges included:
+            </p>
+            
+            <ul>
+                <li><strong>Frame Rate Consistency:</strong> Maintaining stable processing speeds across different system configurations</li>
+                <li><strong>Visual Variations:</strong> Handling different champion skins, map themes, and visual effects</li>
+                <li><strong>Memory Management:</strong> Preventing memory leaks in long-running real-time applications</li>
+                <li><strong>False Positive Reduction:</strong> Distinguishing between actual champions and similar visual elements</li>
+            </ul>
+
+            <h2 id="lessons">Lessons Learned</h2>
+            <p>
+                This project taught me valuable lessons about real-time computer vision, performance optimization, 
+                and system architecture. Working with live data streams highlighted the importance of robust error 
+                handling and the challenges of maintaining consistency in dynamic environments.
+            </p>
+            
+            <p>
+                Perhaps most importantly, the project demonstrated the ethical considerations involved in developing 
+                tools that could potentially affect competitive gaming environments, reinforcing the importance of 
+                responsible development practices.
+            </p>
+
+            <h2 id="conclusion">Conclusion</h2>
+            <p>
+                Rift Recon represents a fascinating intersection of computer vision, real-time processing, and gaming 
+                technology. While created for educational purposes, the project provided invaluable experience in 
+                developing high-performance computer vision systems and working with real-time data streams.
+            </p>
+            
+            <p>
+                The techniques and optimizations developed for this project have applications far beyond gaming, 
+                from surveillance systems to autonomous vehicles. Most importantly, it reinforced my passion for 
+                computer vision and real-time systems development.
+            </p>
+            
+            <p>
+                The complete source code and documentation for this project demonstrate advanced computer vision 
+                techniques and serve as a learning resource for others interested in real-time image processing 
+                applications.
+            </p>
+        </article>
+    </div>
+</body>
+</html>

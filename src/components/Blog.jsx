@@ -41,7 +41,7 @@ const Blog = () => {
   return (
     <>
       <motion.div variants={textVariant()}>
-        <p className={`${styles.sectionSubText}`}>My thoughts and insights</p>
+        <p className={`${styles.sectionSubText}`}>My stories</p>
         <h2 className={`${styles.sectionHeadText}`}>Blog</h2>
       </motion.div>
 
@@ -49,9 +49,7 @@ const Blog = () => {
         variants={fadeIn("", "", 0.1, 1)}
         className="mt-4 text-secondary text-[17px] max-w-3xl leading-[30px]"
       >
-        Welcome to my blog where I share insights, tutorials, and thoughts about 
-        technology, programming, and my journey in computer science. From AI and 
-        machine learning to web development and problem-solving strategies.
+        Get ready to hear me yap about my latest projects, coding adventures, and some random stuffs 🙃
       </motion.p>
 
       <div className="mt-20 grid grid-cols-1 md:grid-cols-2 gap-6">
