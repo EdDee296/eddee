@@ -153,6 +153,25 @@
             margin-bottom: 0.5rem;
         }
         
+        .blog-image {
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+            border-radius: 0.5rem;
+            margin: 2rem auto;
+            display: block;
+            border: 2px solid #333;
+        }
+        
+        .image-caption {
+            text-align: center;
+            color: #aaa6c3;
+            font-size: 0.9rem;
+            font-style: italic;
+            margin-top: 0.5rem;
+            margin-bottom: 2rem;
+        }
+        
         @media (max-width: 768px) {
             .container {
                 padding: 1rem;
@@ -171,8 +190,8 @@
         <header class="blog-header">
             <h1 class="blog-title">How I Created a "Cheating Tool" for League of Legends</h1>
             <div class="blog-meta">
-                Published on January 15, 2025 by David Pham
-            </div>
+                Published on ---, 2025 by me :)
+            </div>  
         </header>
         
         <article class="blog-content">
@@ -183,19 +202,18 @@
 
             <h2 id="intro">Introduction</h2>
             <p>
-                Rift Recon is a computer vision tool I developed that analyzes League of Legends gameplay in real-time. 
-                The system detects, tracks, and reports enemy champion movements on the minimap, providing tactical 
-                positioning information through a WebSocket interface. While the name might suggest otherwise, this 
-                project was born from curiosity about computer vision applications in gaming environments rather than 
-                any desire to gain unfair advantages.
+                <strong>Rift Recon</strong> is a real-time computer vision tool I developed to analyze the minimap in <em>League of Legends</em>. 
+                It detects, tracks, and reports enemy champion movements, delivering positional information to an in-game overlay via a WebSocket interface. 
+                Despite the tactical-sounding name, this project stemmed purely from a personal curiosity about applying computer vision in gaming environments — 
+                not from a desire to gain any unfair advantage.
             </p>
             
             <p>
-                What started as a simple experiment in object detection evolved into a comprehensive system that 
-                combines real-time image processing, machine learning, and network communication. The project 
-                challenged me to work with frame-perfect timing, optimize performance for real-time processing, 
-                and create a robust detection system that could handle the dynamic nature of a live game.
+                What began as a simple experiment in object detection evolved into a comprehensive system built entirely on classical computer vision techniques. 
+                Rift Recon leverages real-time image processing and efficient tracking methods to maintain accurate champion detection throughout a live match. 
+                This project challenged me to optimize for frame-perfect timing, minimize CPU overhead, and build a detection pipeline capable of adapting to the fast-paced and ever-changing nature of in-game visuals.
             </p>
+
 
             <h2 id="background">Background</h2>
             <p>
@@ -211,24 +229,33 @@
                 objects in a dynamic environment with consistent lighting, colors, and visual elements - making it 
                 an ideal testbed for computer vision algorithms.
             </p>
+            
+            <img src="/src/assets/riftrecon/minimap.png" alt="League of Legends minimap showing champion positions" class="blog-image">
+            <div class="image-caption">
+                Example of a League of Legends minimap 
+            </div>
 
             <div class="toc">
                 <h3>📋 Table of Contents</h3>
                 <ul>
-                    <li><a href="#intro">Introduction</a></li>
-                    <li><a href="#background">Background</a></li>
-                    <li><a href="#architecture">System Architecture</a></li>
-                    <li><a href="#detection">Champion Detection Algorithm</a></li>
-                    <li><a href="#tracking">Real-time Tracking Implementation</a></li>
-                    <li><a href="#websocket">WebSocket Communication</a></li>
-                    <li><a href="#performance">Performance Optimization</a></li>
-                    <li><a href="#challenges">Technical Challenges</a></li>
-                    <li><a href="#lessons">Lessons Learned</a></li>
-                    <li><a href="#conclusion">Conclusion</a></li>
+                    <li><a href="#architecture">1. System Architecture</a></li>
+                        <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                            <li><a href="#macro">1.1 The Solution Architecture (The "Macro" View)</a></li>
+                            <li><a href="#meso">1.2 The Core Library Architecture (The "Meso" View)</a></li>
+                        </ul>
+                    <li><a href="#capturing">2. Frame Capturing</a></li>
+                    <li><a href="#processing">3. Frame Processing</a></li>
+                    <li><a href="#overlay">4. In-game Overlay</a></li>
+                    <li><a href="#conclusion">5. Conclusion</a>
+                        <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                            <li><a href="#challenges">5.1 Technical Challenges</a></li>
+                            <li><a href="#lessons">5.2 Lessons Learned</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
 
-            <h2 id="architecture">System Architecture</h2>
+            <h2 id="architecture">1. System Architecture</h2>
             <p>
                 The Rift Recon system consists of several interconnected components working together to provide 
                 real-time champion detection and tracking. The architecture was designed with modularity and 
@@ -236,89 +263,108 @@
             </p>
             
             <p>
-                At its core, the system captures screen data, processes it through computer vision algorithms, 
-                and communicates findings through a WebSocket interface. The modular design allows for easy 
-                testing and improvement of individual components without affecting the entire system.
+                To better understand the system, I'll break down the architecture into 2 different perspectives: 
+                the "macro" view and the "meso" view.
             </p>
 
-            <h2 id="detection">Champion Detection Algorithm</h2>
+            <h3 id="macro">1.1 The Solution Architecture (The "Macro" View)</h3>
             <p>
-                The heart of Rift Recon lies in its champion detection algorithm. Using a combination of template 
-                matching and feature detection, the system can identify champion icons on the minimap with high 
-                accuracy. The algorithm accounts for different champion skins, varying icon sizes, and the 
-                dynamic lighting effects that occur during gameplay.
-            </p>
-            
-            <p>
-                One of the key innovations was developing a robust template database that could handle the visual 
-                variations in champion appearances while maintaining fast processing speeds. The detection pipeline 
-                processes each frame in under 16ms to maintain real-time performance.
+                Initially, everything lived in one giant <code>main.cpp</code> file. It worked—until it didn’t. As the project grew, 
+                things got messy fast. So I restructured the system into a clean, modular design.
             </p>
 
-            <h2 id="tracking">Real-time Tracking Implementation</h2>
-            <p>
-                Once champions are detected, the tracking system maintains their positions across frames, predicting 
-                movement patterns and handling occlusion scenarios. The tracking algorithm uses Kalman filters to 
-                smooth position data and predict future locations, helping maintain consistency even when detection 
-                temporarily fails.
-            </p>
-            
-            <p>
-                The tracking system also implements intelligent logic to distinguish between different champion 
-                types and associate detected objects with specific players, creating a comprehensive picture of 
-                the battlefield state.
-            </p>
-
-            <h2 id="websocket">WebSocket Communication</h2>
-            <p>
-                To make the detected information accessible, Rift Recon implements a WebSocket server that broadcasts 
-                real-time positioning data. This allows external applications to receive live updates about champion 
-                positions, movement patterns, and other tactical information.
-            </p>
-            
-            <p>
-                The communication protocol was designed to be lightweight and efficient, transmitting only essential 
-                data to minimize latency. The WebSocket implementation supports multiple concurrent connections and 
-                includes error handling for robust operation.
-            </p>
-
-            <h2 id="performance">Performance Optimization</h2>
-            <p>
-                Achieving real-time performance required extensive optimization throughout the system. Key improvements 
-                included implementing multi-threading for parallel processing, optimizing computer vision algorithms 
-                for speed, and reducing memory allocations in critical paths.
-            </p>
-            
-            <p>
-                The final system can process full-resolution game footage at 60+ FPS while maintaining detection 
-                accuracy above 95%. Memory usage was optimized to prevent garbage collection pauses that could 
-                impact real-time performance.
-            </p>
-
-            <h2 id="challenges">Technical Challenges</h2>
-            <p>
-                Developing Rift Recon presented numerous technical challenges, from handling varying game conditions 
-                to optimizing for real-time performance. Some of the most significant challenges included:
-            </p>
-            
+            <h4>A Three-Project Solution</h4>
             <ul>
-                <li><strong>Frame Rate Consistency:</strong> Maintaining stable processing speeds across different system configurations</li>
-                <li><strong>Visual Variations:</strong> Handling different champion skins, map themes, and visual effects</li>
-                <li><strong>Memory Management:</strong> Preventing memory leaks in long-running real-time applications</li>
-                <li><strong>False Positive Reduction:</strong> Distinguishing between actual champions and similar visual elements</li>
+                <li>
+                    <strong><code>RiftRecon-Core</code>:</strong> 
+                    A static library (<code>.lib</code>) that contains the main logic—frame analysis, champion tracking, and WebSocket communication.
+                </li>
+                <li>
+                    <strong><code>RiftRecon-App</code>:</strong> 
+                    A simple executable (<code>.exe</code>) that initializes and runs the core system.
+                </li>
+                <li>
+                    <strong><code>RiftRecon-Tests</code>:</strong> 
+                    A separate testing suite using Google Test to validate the core library’s behavior and accuracy.
+                </li>
             </ul>
 
-            <h2 id="lessons">Lessons Learned</h2>
             <p>
-                This project taught me valuable lessons about real-time computer vision, performance optimization, 
-                and system architecture. Working with live data streams highlighted the importance of robust error 
-                handling and the challenges of maintaining consistency in dynamic environments.
+                This separation keeps the system organized and makes it easier to test, debug, and extend. Each project has a clear role, and the logic-heavy Core can be reused or upgraded independently of the App or Tests.
+            </p>
+
+            <img src="/src/assets/riftrecon/simpleuml.png" alt="UML diagram showing Rift Recon system architecture" class="blog-image">
+            <div class="image-caption">
+                High-level diagram 
+            </div>
+
+            <h3 id="meso">1.2 The Core Library Architecture (The "Meso" View)</h3>
+
+            <p>
+                Inside the "Brain" (our <code>RiftRecon-Core</code> library), I didn't want chaos. I used Object-Oriented Programming to assign clear roles, like assembling a team of specialists. The main boss is the <code>ApplicationController</code> class. It acts as the conductor of an orchestra—it doesn't play an instrument itself, but it initializes and coordinates all the other major components to make sure they work in harmony.
+            </p>
+
+            <p>
+                The biggest engineering challenge here was performance. This tool absolutely cannot cause lag mid-game. The solution was the multi-threaded <code>GameCaptureEngine</code>, which I designed like a well-oiled, two-person assembly line:
+            </p>
+
+            <ol>
+                <li>
+                    <strong>The Watcher (Capture Thread):</strong> 
+                    One thread's only job is to furiously grab frames from the screen using DirectX and drop them into a shared queue. It runs uninterrupted, ensuring we never miss a moment.
+                </li>
+                <li>
+                    <strong>The Thinker (Processing Thread):</strong> 
+                    A second thread pulls frames from that queue and handles all the heavy lifting. This is where the <code>ChampionDetector</code> gets to run its OpenCV magic.
+                </li>
+            </ol>
+
+            <p>
+                By decoupling capturing and processing, the app stays perfectly smooth. When a detection is made, the result is handed off to the <code>WebSocketServer</code>, which then shouts the update to the in-game overlay.
+            </p>
+
+            <img src="/src/assets/riftrecon/uml.png" alt="UML diagram showing Rift Recon system architecture" class="blog-image">
+            <div class="image-caption">
+                Complete UML diagram 
+            </div>
+
+            <h2 id="capturing">Frame Capturing</h2>
+            <p>
+                The frame capturing system is responsible for efficiently extracting screen data from the League of Legends 
+                client in real-time. This component uses optimized screen capture APIs to minimize CPU overhead while 
+                maintaining the high frame rates necessary for accurate detection.
             </p>
             
             <p>
-                Perhaps most importantly, the project demonstrated the ethical considerations involved in developing 
-                tools that could potentially affect competitive gaming environments, reinforcing the importance of 
-                responsible development practices.
+                The system focuses specifically on the minimap region, using intelligent region detection to automatically 
+                locate and crop the relevant area regardless of game resolution or UI scaling. This targeted approach 
+                significantly reduces the amount of data that needs to be processed downstream.
+            </p>
+
+            <h2 id="processing">Frame Processing</h2>
+            <p>
+                Frame processing encompasses the core computer vision algorithms that analyze captured minimap data. 
+                Using a combination of template matching and feature detection, the system identifies champion icons 
+                with high accuracy while accounting for visual variations like different skins and lighting effects.
+            </p>
+            
+            <p>
+                The processing pipeline includes preprocessing steps for noise reduction and contrast enhancement, 
+                followed by multi-scale template matching to handle different icon sizes. Advanced filtering techniques 
+                eliminate false positives and ensure robust detection across varying game conditions.
+            </p>
+
+            <h2 id="overlay">In-game Overlay</h2>
+            <p>
+                The in-game overlay system renders detected champion positions directly onto the game screen, providing 
+                real-time visual feedback. This component receives position data through the WebSocket interface and 
+                displays it using transparent overlay graphics that don't interfere with normal gameplay.
+            </p>
+            
+            <p>
+                The overlay includes features like movement prediction trails, last-seen indicators, and customizable 
+                visual elements. The rendering system is optimized for minimal performance impact while maintaining 
+                clear visibility of tracked information during intense gameplay moments.
             </p>
 
             <h2 id="conclusion">Conclusion</h2>
@@ -338,6 +384,32 @@
                 The complete source code and documentation for this project demonstrate advanced computer vision 
                 techniques and serve as a learning resource for others interested in real-time image processing 
                 applications.
+            </p>
+
+            <h3 id="challenges">Technical Challenges</h3>
+            <p>
+                Developing Rift Recon presented numerous technical challenges, from handling varying game conditions 
+                to optimizing for real-time performance. Some of the most significant challenges included:
+            </p>
+            
+            <ul>
+                <li><strong>Frame Rate Consistency:</strong> Maintaining stable processing speeds across different system configurations</li>
+                <li><strong>Visual Variations:</strong> Handling different champion skins, map themes, and visual effects</li>
+                <li><strong>Memory Management:</strong> Preventing memory leaks in long-running real-time applications</li>
+                <li><strong>False Positive Reduction:</strong> Distinguishing between actual champions and similar visual elements</li>
+            </ul>
+
+            <h3 id="lessons">Lessons Learned</h3>
+            <p>
+                This project taught me valuable lessons about real-time computer vision, performance optimization, 
+                and system architecture. Working with live data streams highlighted the importance of robust error 
+                handling and the challenges of maintaining consistency in dynamic environments.
+            </p>
+            
+            <p>
+                Perhaps most importantly, the project demonstrated the ethical considerations involved in developing 
+                tools that could potentially affect competitive gaming environments, reinforcing the importance of 
+                responsible development practices.
             </p>
         </article>
     </div>
