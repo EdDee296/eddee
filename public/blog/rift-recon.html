@@ -172,6 +172,15 @@
             margin-bottom: 2rem;
         }
         
+        .tech-term {
+            color: #4ec9b0; /* A common 'code green' color, adjust as needed */
+            font-family: 'Fira Code', 'Courier New', Courier, monospace; /* A nice coding font */
+            font-weight: 500;
+            background-color: rgba(78, 201, 176, 0.1);
+            padding: 0 3px;
+            border-radius: 3px;
+        }
+        
         @media (max-width: 768px) {
             .container {
                 padding: 1rem;
@@ -188,7 +197,7 @@
         <a href="/?scrollTo=blog" class="back-btn">← Back to Portfolio</a>
         
         <header class="blog-header">
-            <h1 class="blog-title">How I Created a "Cheating Tool" for League of Legends</h1>
+            <h1 class="blog-title">How I Created a "Cheat" for League of Legends</h1>
             <div class="blog-meta">
                 Published on ---, 2025 by me :)
             </div>  
@@ -200,61 +209,57 @@
                 <p>This project was created purely for educational purposes to explore computer vision and real-time data processing. It was never used in actual gameplay and is not intended to provide unfair advantages.</p>
             </div>
 
+            <!-- #region Intro-->
             <h2 id="intro">Introduction</h2>
             <p>
-                <strong>Rift Recon</strong> is a real-time computer vision tool I developed to analyze the minimap in <em>League of Legends</em>. 
-                It detects, tracks, and reports enemy champion movements, delivering positional information to an in-game overlay via a WebSocket interface. 
-                Despite the tactical-sounding name, this project stemmed purely from a personal curiosity about applying computer vision in gaming environments — 
-                not from a desire to gain any unfair advantage.
-            </p>
-            
-            <p>
-                What began as a simple experiment in object detection evolved into a comprehensive system built entirely on classical computer vision techniques. 
-                Rift Recon leverages real-time image processing and efficient tracking methods to maintain accurate champion detection throughout a live match. 
-                This project challenged me to optimize for frame-perfect timing, minimize CPU overhead, and build a detection pipeline capable of adapting to the fast-paced and ever-changing nature of in-game visuals.
+                As a fan of both gaming and coding, I've always wanted to merge those two worlds. In League of Legends, you're constantly told to "watch the map," but during the intense laning phase, you're also juggling last-hitting, trading with your opponent, and dodging skillshots. It's easy to miss a crucial enemy rotation.
             </p>
 
+            <p>
+                So, I decided to build myself a teammate—a bot whose only job is to stare at the minimap for me, 24/7. This project, <strong>Rift Recon</strong>, is a real-time computer vision tool I built in C++ that acts as that dedicated map-watcher. It uses <span class="tech-term">OpenCV</span> to detect and track enemy champions, then calls out their positions to an in-game overlay via a <span class="tech-term">WebSocket</span> interface.
+            </p>
 
-            <h2 id="background">Background</h2>
             <p>
-                League of Legends is a multiplayer online battle arena (MOBA) game where map awareness and champion 
-                positioning are crucial for success. The minimap provides essential information about enemy locations, 
-                but only when enemies are visible to your team. This limitation creates interesting technical challenges 
-                for computer vision applications.
+                One of the great things about working with the minimap is its static background and consistent champion icons (except for Kayn lol). 
+                That predictability meant I could skip a lot of the visual complexity found in the main game screen and focus entirely on building a fast, accurate detection pipeline. 
+                Let's dive into how I built this thing!
             </p>
-            
-            <p>
-                The idea for Rift Recon came from my interest in real-time computer vision and the technical challenge 
-                of processing live game footage. I wanted to explore how accurately I could detect and track moving 
-                objects in a dynamic environment with consistent lighting, colors, and visual elements - making it 
-                an ideal testbed for computer vision algorithms.
-            </p>
+
             
             <img src="/src/assets/riftrecon/minimap.png" alt="League of Legends minimap showing champion positions" class="blog-image">
             <div class="image-caption">
-                Example of a League of Legends minimap 
+                Example of a League of Legends minimap - 
+                We want to detect enemies, which has red circles around them
             </div>
-
+            <!-- #endregion-->
+            
             <div class="toc">
                 <h3>📋 Table of Contents</h3>
                 <ul>
                     <li><a href="#architecture">1. System Architecture</a></li>
                         <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
-                            <li><a href="#macro">1.1 The Solution Architecture (The "Macro" View)</a></li>
-                            <li><a href="#meso">1.2 The Core Library Architecture (The "Meso" View)</a></li>
+                            <li><a href="#macro">1.1 The Solution Architecture</a></li>
+                            <li><a href="#meso">1.2 The Core Library Architecture</a></li>
                         </ul>
                     <li><a href="#capturing">2. Frame Capturing</a></li>
-                    <li><a href="#processing">3. Frame Processing</a></li>
+                    <li><a href="#processing">3. Frame Processing</a>
+                        <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                            <li><a href="#detection">3.1 Two-Factor Authentication Detection</a></li>
+                            <li><a href="#tracking">3.2 From "Maybe" to "Tracked"</a></li>
+                            <li><a href="#positioning">3.3 Positioning and Alerts</a></li>
+                        </ul>
+                    </li>
                     <li><a href="#overlay">4. In-game Overlay</a></li>
                     <li><a href="#conclusion">5. Conclusion</a>
                         <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
-                            <li><a href="#challenges">5.1 Technical Challenges</a></li>
-                            <li><a href="#lessons">5.2 Lessons Learned</a></li>
+                            <li><a href="#challenges">5.1 Technical Challenges & Solutions</a></li>
+                            <li><a href="#problems">5.2 Existing Problems</a></li>
                         </ul>
                     </li>
                 </ul>
             </div>
 
+            <!-- #region System Architecture -->
             <h2 id="architecture">1. System Architecture</h2>
             <p>
                 The Rift Recon system consists of several interconnected components working together to provide 
@@ -269,8 +274,8 @@
 
             <h3 id="macro">1.1 The Solution Architecture (The "Macro" View)</h3>
             <p>
-                Initially, everything lived in one giant <code>main.cpp</code> file. It worked—until it didn’t. As the project grew, 
-                things got messy fast. So I restructured the system into a clean, modular design.
+                Initially, everything lived in one giant <code>main.cpp</code> file. It worked—until it didn't. As the project grew, 
+                things got messy fast, so I restructured the system into a clean, modular design.
             </p>
 
             <h4>A Three-Project Solution</h4>
@@ -285,7 +290,7 @@
                 </li>
                 <li>
                     <strong><code>RiftRecon-Tests</code>:</strong> 
-                    A separate testing suite using Google Test to validate the core library’s behavior and accuracy.
+                    A separate testing suite using Google Test to validate the core library's behavior and accuracy.
                 </li>
             </ul>
 
@@ -305,7 +310,7 @@
             </p>
 
             <p>
-                The biggest engineering challenge here was performance. This tool absolutely cannot cause lag mid-game. The solution was the multi-threaded <code>GameCaptureEngine</code>, which I designed like a well-oiled, two-person assembly line:
+                The biggest engineering challenge here was performance. This tool absolutely cannot cause lag mid-game. The solution was the multi-threaded <code>GameCaptureEngine</code>, which I designed like a two-person assembly line:
             </p>
 
             <ol>
@@ -327,90 +332,256 @@
             <div class="image-caption">
                 Complete UML diagram 
             </div>
+            <!-- #endregion -->
 
-            <h2 id="capturing">Frame Capturing</h2>
+            <!-- #region Frame Capturing -->
+           <h2 id="capturing">2. Frame Capturing: The Eye of the System</h2>
             <p>
-                The frame capturing system is responsible for efficiently extracting screen data from the League of Legends 
-                client in real-time. This component uses optimized screen capture APIs to minimize CPU overhead while 
-                maintaining the high frame rates necessary for accurate detection.
-            </p>
-            
-            <p>
-                The system focuses specifically on the minimap region, using intelligent region detection to automatically 
-                locate and crop the relevant area regardless of game resolution or UI scaling. This targeted approach 
-                significantly reduces the amount of data that needs to be processed downstream.
+                None of this works if you can't "see" the game. The first step is capturing the screen, and we need to do it efficiently because a slow or laggy screen capture would make the entire project useless. That's why i didn't use the builtin Opencv's <code>VideoCapture()</code> function (they rely on costly memory copies between the GPU and CPU for every single frame).
             </p>
 
-            <h2 id="processing">Frame Processing</h2>
             <p>
-                Frame processing encompasses the core computer vision algorithms that analyze captured minimap data. 
-                Using a combination of template matching and feature detection, the system identifies champion icons 
-                with high accuracy while accounting for visual variations like different skins and lighting effects.
+                Instead, to achieve high-performance and low-overhead screen capture, I went straight to the source: the <strong><a href="https://learn.microsoft.com/en-us/windows/win32/direct3ddxgi/d3d10-graphics-programming-guide-dxgi" target="_blank" style="color: #00d4aa; text-decoration: none;">Microsoft DirectX Graphics Infrastructure (DXGI)</a></strong>, specifically, I used the <strong><a href="https://learn.microsoft.com/en-us/windows/win32/direct3ddxgi/desktop-dup-api" target="_blank" style="color: #00d4aa; text-decoration: none;">Desktop Duplication API</a></strong>. This is a powerful, modern API that lets an application directly access the GPU's frame buffer without costly CPU-to-GPU memory transfers.
             </p>
             
+            <div style="background: rgba(100, 181, 246, 0.1); border: 1px solid #64b5f6; border-left: 4px solid #64b5f6; padding: 1rem; border-radius: 0.5rem; margin: 1.5rem 0;">
+                <span style="color: #64b5f6; font-weight: bold; font-size: 1.05em;">💡 Fun fact: It's the same technology that powers tools like OBS and Discord's screen sharing!</span>
+            </div>
+
+            <h4>Focusing on What Matters: The Minimap</h4>
+
             <p>
-                The processing pipeline includes preprocessing steps for noise reduction and contrast enhancement, 
-                followed by multi-scale template matching to handle different icon sizes. Advanced filtering techniques 
-                eliminate false positives and ensure robust detection across varying game conditions.
+                Capturing the entire screen just to look at a tiny 300x300 pixel minimap would be a massive waste of resources. To solve this, the <code>ScreenCapture</code> module does two things:
+            </p>
+            <ol>
+                <li>It allows you to select the minimap region with a simple click-and-drag interface.</li>
+                <li>Once the region is set, every frame captured via DXGI is immediately cropped down to just that small area.</li>
+            </ol>
+            <p>
+                This targeted approach dramatically reduces the amount of data that needs to be processed, which is a huge performance win for the downstream detection pipeline.
             </p>
 
-            <h2 id="overlay">In-game Overlay</h2>
+            <h4>The Producer-Consumer Queue</h4>
             <p>
-                The in-game overlay system renders detected champion positions directly onto the game screen, providing 
-                real-time visual feedback. This component receives position data through the WebSocket interface and 
-                displays it using transparent overlay graphics that don't interfere with normal gameplay.
+                As I mentioned in the architecture section, the capture process runs on its own thread—the "Watcher." This thread's job is to feed frames to the "Thinker" (the processing thread). To do this safely and efficiently, I implemented a classic <strong>Producer-Consumer pattern</strong>.
+            </p>
+            <ul>
+                <li><strong>The Producer (Capture Thread):</strong> Captures and crops a frame, then pushes the resulting <code>cv::Mat</code> into a thread-safe, buffered queue. I kept the queue size small (around 3 frames) to keep memory usage low and ensure the data being processed is always fresh.</li>
+                <li><strong>The Consumer (Processing Thread):</strong> When it's ready for more work, it simply pulls the next available frame from the front of the queue.</li>
+            </ul>
+            <p>
+                This queue acts as a simple, effective buffer that decouples the two threads, allowing them to work at their own pace without ever blocking each other.
             </p>
             
+            <img src="/src/assets/riftrecon/producerconsumer.png" alt="Producer-Consumer pattern visualization" class="blog-image">
+            <div class="image-caption">
+                Producer-Consumer pattern in action
+            </div>
+            <!-- #endregion -->
+
+            <!-- #region Frame Processing -->
+            <h2 id="processing">3. Frame Processing: The Brain's Workflow</h2>
             <p>
-                The overlay includes features like movement prediction trails, last-seen indicators, and customizable 
-                visual elements. The rendering system is optimized for minimal performance impact while maintaining 
-                clear visibility of tracked information during intense gameplay moments.
+                Once the <code>GameCaptureEngine</code> hands over a fresh frame of the minimap, the real magic begins. The challenge isn't just *finding* a champion; it's finding the <em>right</em> champion and not getting fooled by a stray minion or visual noise. To solve this, I built a robust, <span class="tech-term">multi-stage detection pipeline</span>.
             </p>
 
-            <h2 id="conclusion">Conclusion</h2>
+            <h3 id="detection">3.1 Two-Factor Authentication Detection</h3>
             <p>
-                Rift Recon represents a fascinating intersection of computer vision, real-time processing, and gaming 
-                technology. While created for educational purposes, the project provided invaluable experience in 
-                developing high-performance computer vision systems and working with real-time data streams.
+                At its core, the detection logic is a two-step verification process to ensure we're confident in what we see. I think of it as "spotting a suspect, then checking their ID."
             </p>
+            <ul>
+                <li>
+                    <strong>The Quick Scan (<span class="tech-term">Template Matching</span>):</strong> First, the system performs a fast scan across the minimap using <span class="tech-term">TM_CCORR_NORMED</span> method (because it suports the use of masks). I use pre-loaded 30x30 pixel champion portraits, but with a trick: I apply a <span class="tech-term">circular mask</span> to each template. This forces the algorithm to focus only on the circular portrait area, ignoring noisy square corners and dramatically improving the initial match quality.
+                </li>
+            </ul>
             
-            <p>
-                The techniques and optimizations developed for this project have applications far beyond gaming, 
-                from surveillance systems to autonomous vehicles. Most importantly, it reinforced my passion for 
-                computer vision and real-time systems development.
-            </p>
-            
-            <p>
-                The complete source code and documentation for this project demonstrate advanced computer vision 
-                techniques and serve as a learning resource for others interested in real-time image processing 
-                applications.
-            </p>
-
-            <h3 id="challenges">Technical Challenges</h3>
-            <p>
-                Developing Rift Recon presented numerous technical challenges, from handling varying game conditions 
-                to optimizing for real-time performance. Some of the most significant challenges included:
-            </p>
+            <div style="display: flex; gap: 2rem; justify-content: center; align-items: flex-start; margin: 2rem 0; flex-wrap: wrap;">
+                <div style="text-align: center;">
+                    <img src="/src/assets/riftrecon/template_original.png" alt="Aatrox original template" style="width: 150px; height: 150px; border-radius: 0.5rem; border: 2px solid #333;">
+                    <div class="image-caption" style="margin-top: 0.5rem; margin-bottom: 0;">
+                        Aatrox original template (source: Riot Games)
+                    </div>
+                </div>
+                <div style="text-align: center;">
+                    <img src="/src/assets/riftrecon/template_masked.png" alt="Aatrox masked template" style="width: 150px; height: 150px; border-radius: 0.5rem; border: 2px solid #333;">
+                    <div class="image-caption" style="margin-top: 0.5rem; margin-bottom: 0;">
+                        Aatrox masked template
+                    </div>
+                </div>
+            </div>
             
             <ul>
-                <li><strong>Frame Rate Consistency:</strong> Maintaining stable processing speeds across different system configurations</li>
-                <li><strong>Visual Variations:</strong> Handling different champion skins, map themes, and visual effects</li>
-                <li><strong>Memory Management:</strong> Preventing memory leaks in long-running real-time applications</li>
-                <li><strong>False Positive Reduction:</strong> Distinguishing between actual champions and similar visual elements</li>
+                <li>
+                    <strong>The "ID Check" (<span class="tech-term">Histogram Validation</span>):</strong> A shape match isn't enough. For every potential candidate, the system performs a second check. It calculates the <span class="tech-term">hue histogram</span> of the detected patch and compares it to the champion's pre-computed histogram using the <span class="tech-term">Bhattacharyya distance</span> method. If the color "DNA" doesn't match, the detection is rejected. This single step is the hero of the system, eliminating the vast majority of false positives.
+                    <img src="/src/assets/riftrecon/hist_plot.png" alt="1D Hue Histogram plot for Aatrox's template" class="blog-image">
+                    <div class="image-caption">
+                        The plot shows Aatrox's color DNA: mostly deep reds (bins 0 & 15), some dark blues (bins 8-11), and no greens.
+                    </div>
+                    <p>
+                        I chose a simple <span class="tech-term">1D Hue histogram</span> with 16 bins because it's computationally fast and creates a unique "color fingerprint" for each champion. This single check is the hero of the system, instantly crushing false positives by rejecting similarly shaped objects that don't share the same color DNA.
+                    </p>
+                </li>
             </ul>
 
-            <h3 id="lessons">Lessons Learned</h3>
+            <h3 id="tracking">3.2 From "Maybe" to "Tracked" - Making Detections Stick</h3>
             <p>
-                This project taught me valuable lessons about real-time computer vision, performance optimization, 
-                and system architecture. Working with live data streams highlighted the importance of robust error 
-                handling and the challenges of maintaining consistency in dynamic environments.
+                A single-frame detection can be a fluke. To prevent the overlay from flickering wildly, the system needs memory and state.
+            </p>
+            <ul>
+                <li>
+                    <strong>The Candidate:</strong> A champion isn't officially "Spotted" the instant they're detected. They first enter a "Candidate" state. Only after being detected for <span class="tech-term">3 consecutive frames</span> is the candidate promoted to a fully tracked champion. This system gracefully handles minor occlusions or single-frame detection misses.
+                </li>
+            </ul>
+            
+            <img src="/src/assets/riftrecon/candidate.png" alt="Champion candidate detection visualization" class="blog-image">
+            <div class="image-caption">
+                Champion in candidate state 
+            </div>
+            
+            <ul>
+                <li>
+                    <strong>The Tracker:</strong> Once a champion is confirmed, continuously re-scanning the entire minimap for them is inefficient. Instead, the system initializes a <span class="tech-term">KCF object tracker</span> on them (KCF is a really fast and efficient object tracking algorithm, and it's accurate enough for my use case). This tracker follows the champion's bounding box frame-to-frame, which is far more efficient. To prevent long-term drift, trackers are periodically reset after every <span class="tech-term">30 frames</span>, forcing the system to re-validate the champion's position with the full detection pipeline.
+                </li>
+            </ul>
+            
+            <img src="/src/assets/riftrecon/tracked.png" alt="Champion being actively tracked" class="blog-image">
+            <div class="image-caption">
+                Champion being actively tracked with KCF tracker
+            </div>
+
+            <h3 id="positioning">3.3 Turning "Where" into "What" - Positioning and Alerts</h3>
+            <p>
+                So far, the system can detect when an enemy champion appears on the minimap. But that alone isn't very useful. To provide real value, it must also determine and communicate <em>where</em> the enemy is—whether they're in mid lane, top lane, or roaming through the jungle.
+            </p>
+
+            <ul>
+                <li>
+                    <strong>Position Classification:</strong> The raw bounding box data is first mapped into a 
+                    <span class="tech-term">normalized (0-1) coordinate space</span>. From there, using simple 
+                    geometry and pre-defined regions, the system classifies the champion's position into 
+                    game-relevant zones like "Top Lane," "Bot River," or "Enemy Red Buff."
+                    
+                    <img src="/src/assets/riftrecon/regions.png" alt="Position classification regions on minimap" class="blog-image">
+                    <div class="image-caption">
+                        Pre-defined regions (it's a mess ik :D)
+                    </div>
+                </li>
+                <li>
+                    <strong>Real-Time Notifications:</strong> Once the system knows both the <em>what</em> and the 
+                    <em>where</em>, it sends a structured <span class="tech-term">JSON message</span> to the front-end through the 
+                    <code>WebSocketServer</code>. To avoid overwhelming the player with redundant messages, it uses 
+                    <span class="tech-term">temporal filtering</span>—only pushing an alert when a champion's state 
+                    or general location has meaningfully changed.
+                    
+                    <p>Here's an example of a WebSocket message sent when a champion is detected:</p>
+<pre><code>{
+    "champion": "Akali",
+    "event": "champion_status",
+    "position": "Mid Lane",
+    "status": "spotted",
+    "timestamp": 17521863450716066
+}</code></pre>
+                </li>
+                
+            </ul>
+            <!-- #endregion -->
+
+            <!-- #region In-game Overlay -->
+            <h2 id="overlay">4. The In-game Overlay: Making Data Visual</h2>
+            <p>
+                So, how do you safely draw on top of a live game without triggering its anti-cheat? You don't. You use a platform that the game developers already trust.
+            </p>
+
+            <p>
+                For this, I chose the <a href="https://dev.overwolf.com/ow-electron/getting-started/overview" target="_blank" style="color: #00d4aa; text-decoration: none;"><strong>Overwolf framework</strong></a>. It's a sanctioned platform for building in-game apps, which meant I could focus on the fun part: the UI. The overlay itself is built with web tech (<span class="tech-term">HTML, CSS, & JavaScript</span>) running in an <span class="tech-term">Electron</span> shell.
+            </p>
+
+            <p>
+                My C++ backend pushes <span class="tech-term">JSON</span> updates over a <span class="tech-term">WebSocket</span>, and the JavaScript in the overlay listens for those events to manage notifications. To keep the UI clean and prevent clutter, notifications are handled in a queue. Up to <strong>five recent events</strong> are stored, with each alert displaying on-screen for just **three seconds** before fading out. This ensures the player gets timely information without it becoming a distraction.
             </p>
             
+            <img src="/src/assets/riftrecon/overlay.png" alt="In-game overlay showing champion detection notifications" class="blog-image">
+            <div class="image-caption">
+                The in-game overlay
+            </div>
+            <!-- #endregion -->
+
+            <!-- #region Conclusion -->
+            <h2 id="conclusion">5. Conclusion</h2>
             <p>
-                Perhaps most importantly, the project demonstrated the ethical considerations involved in developing 
-                tools that could potentially affect competitive gaming environments, reinforcing the importance of 
-                responsible development practices.
+                Welp, that's pretty much it! When you combine everything together, you get this:
             </p>
+            
+            <video autoplay loop muted class="blog-image" style="max-width: 800px;">
+                <source src="/src/assets/riftrecon/final.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="image-caption">
+                Rift Recon in action!!!!
+            </div>
+
+            <h3 id="challenges">5.1 Technical Challenges & Solutions</h3>
+            <p>
+                To sum up the technical challenges I faced while building Rift Recon:
+            </p>
+
+            <ul>
+                <li>
+                    <strong>Challenge: In-game lag.</strong>
+                    <br>
+                    <strong>Solution:</strong> A <span class="tech-term">multi-threaded producer-consumer</span> design. A dedicated capture thread (using <span class="tech-term">DXGI</span>) feeds frames to a separate processing thread, ensuring the heavy OpenCV work never blocks the capture loop.
+                </li>
+                
+                <li>
+                    <strong>Challenge: Constant false positives from template matching.</strong>
+                    <br>
+                    <strong>Solution:</strong> A two-stage validation. After a shape match, a second check compares the <span class="tech-term">1D Hue histogram</span> of the patch to the champion's "color fingerprint." No color match, no detection.
+                </li>
+                
+                <li>
+                    <strong>Challenge: Object trackers slowly drifting off-target.</strong>
+                    <br>
+                    <strong>Solution:</strong> A hybrid approach. The fast <span class="tech-term">KCF tracker</span> handles frame-to-frame movement, but is reset every 30 frames to force a high-accuracy re-detection, correcting any drift before it becomes a problem.
+                </li>
+                
+                <li>
+                    <strong>Challenge: Drawing an overlay without getting banned by anti-cheat.</strong>
+                    <br>
+                    <strong>Solution:</strong> Using the <span class="tech-term">Overwolf platform</span>. It's a sanctioned framework that lets me safely render a web-based (<span class="tech-term">HTML/JS</span>) UI on top of the game without modifying any game files.
+                </li>
+            </ul>
+
+            <h3 id="future">5.2 Limitations & Future Work</h3>
+            <p>
+                Like any V1.0, Rift Recon has a few quirks and areas for improvement. Here’s a quick look at the current challenges and my plans to solve them:
+            </p>
+
+            <ul>
+                <li>
+                    <strong>The "Sett" Problem:</strong>
+                    <br>
+                    He's occasionally hard to detect, likely due to his icon's color palette blending in.
+                    <br>
+                    <strong>Next Step:</strong> Fine-tune detection thresholds for him, or train a tiny, specialized <span class="tech-term">CNN</span> for tough cases.
+                </li>
+
+                <li>
+                    <strong>The Platform Limitation:</strong>
+                    <br>
+                    The app is Windows-only because it relies on the <span class="tech-term">DXGI</span> API for screen capture.
+                    <br>
+                    <strong>Next Step:</strong> Abstract the capture layer to support Linux (<span class="tech-term">X11</span>) and macOS (<span class="tech-term">ScreenCaptureKit</span>).
+                </li>
+
+                <li>
+                    <strong>The "Kayn" Problem:</strong>
+                    <br>
+                    His icon changes completely mid-game when he transforms, and my current system can't adapt.
+                    <br>
+                    <strong>Next Step:</strong> Make the template system dynamic. By listening to game events via the Riot API, the app could automatically swap to the correct red or blue Kayn icon.
+                </li>
+            </ul>
+            <!-- #endregion -->
         </article>
     </div>
 </body>

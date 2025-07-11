@@ -31,6 +31,7 @@ import tae from "./company/tae.png";
 import superstars from "./company/superstars.png";
 
 import pre from "./project/Pre.png";
+import riftrecon from "./project/riftrecon.png";
 import sparrer from "./project/sparrer.png";
 import aot from "./project/aot.png";
 import nxc from "./project/nxc.png";
@@ -62,6 +63,7 @@ export {
   sparrer,
   nxc,
   aot,
+  riftrecon,
   coiny,
   cosmic,
   ayo,

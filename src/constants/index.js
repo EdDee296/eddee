@@ -19,6 +19,7 @@ import {
   uofa,
   pre,
   aot,
+  riftrecon,
   sparrer,
   nxc,
   cosmic,
@@ -71,7 +72,7 @@ const services = [
     background: "bg-gradient-to-t bg-gradient-to-t from-purple-200 to-blue-500",
   },
   {
-    title: "Game Developer",
+    title: "Computer Vision",
     icon: emer,
     background: "bg-gradient-to-t from-blue-200 to-green-600",
   },
@@ -163,36 +164,12 @@ const experiences = [
     "Reviewed and graded assignments with constructive feedback to improve code quality and understanding.",
     "Collaborated with the course instructor to ensure grading consistency and student success.",
   ],
-  },
-  {
-    title: "Cashier",
-    company_name: "Van Loc Vietnamese Submarine Shop",
-    icon: vanloc,
-    iconBg: "#000000",
-    date: "April 2023 - Present",
-    points: [
-      "Handling concurrent transactions, orders in a fast-paced environment.",
-      "Learned how to communicate effectively with customers to minimized the time and effort.",
-      "Collaborating with other teammates to complete the tasks in a very limited time period.",
-    ],
-  },
-  {
-    title: "Examiner",
-    company_name: "The Forum English Center",
-    icon: forum,
-    iconBg: "#E6DEDD",
-    date: "May 2022 - Dec 2022",
-    points: [
-      "Participating in testing students' english levels and provide feedbacks.",
-      "Training and guiding new examiners.",
-      "Collaborating with other people to create tests.",
-    ],
   }
 ];
 
 const blogPosts = [
     {
-      title: 'How I created a "Cheating Tool" for Leageue of Legends',
+      title: 'How I created a "Cheat" for Leageue of Legends',
       description: "A computer vision tool that analyzes League of Legends gameplay in real-time to detect, track, and report enemy champion movements on the minimap, providing tactical positioning information through a WebSocket interface.",
       link: "/blog/rift-recon.html", 
       isExternal: false
@@ -200,6 +177,31 @@ const blogPosts = [
   ];
 
 const projects = [
+  {
+    name: "Rift Recon",
+    description: "A computer vision tool that analyzes League of Legends gameplay in real-time to detect, track, and report enemy champion movements on the minimap, providing tactical positioning information through a WebSocket interface.",
+    tags: [
+      {
+        name: "c++",
+        color: "blue-text-gradient",
+      },
+      {
+        name: "opencv",
+        color: "green-text-gradient",
+      },
+      {
+        name: "websocket",
+        color: "text-amber-400",
+      },
+      {
+        name: "DXGI",
+        color: "text-amber-800",
+      },
+    ],
+    image: riftrecon,
+    source_code_link: "/blog/rift-recon.html",
+    linkType: "blog",
+  },
   {
     name: "Sparrer",
     description: "A fullstack cross-platform app for boxers to find their sparring partner",
