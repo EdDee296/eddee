@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>How I Created a "Cheating Tool" for League of Legends - EdDee Blog</title>
-    <link rel="icon" type="image/svg+xml" href="/src/assets/icon.svg/tornado.svg" />
+    <link rel="icon" type="image/svg+xml" href="../../src/assets/icon.svg/tornado.svg" />
     <style>
         * {
             margin: 0;
@@ -226,7 +226,7 @@
             </p>
 
             
-            <img src="/src/assets/riftrecon/minimap.png" alt="League of Legends minimap showing champion positions" class="blog-image">
+            <img src="../riftrecon/minimap.png" alt="League of Legends minimap showing champion positions" class="blog-image">
             <div class="image-caption">
                 Example of a League of Legends minimap - 
                 We want to detect enemies, which has red circles around them
@@ -260,7 +260,7 @@
             </div>
 
             <!-- #region System Architecture -->
-            <h2 id="architecture">1. System Architecture</h2>
+            <h2 id="architecture">1. System Architecture: The Blueprint</h2>
             <p>
                 The Rift Recon system consists of several interconnected components working together to provide 
                 real-time champion detection and tracking. The architecture was designed with modularity and 
@@ -298,7 +298,7 @@
                 This separation keeps the system organized and makes it easier to test, debug, and extend. Each project has a clear role, and the logic-heavy Core can be reused or upgraded independently of the App or Tests.
             </p>
 
-            <img src="/src/assets/riftrecon/simpleuml.png" alt="UML diagram showing Rift Recon system architecture" class="blog-image">
+            <img src="../riftrecon/simpleuml.png" alt="UML diagram showing Rift Recon system architecture" class="blog-image">
             <div class="image-caption">
                 High-level diagram 
             </div>
@@ -328,7 +328,7 @@
                 By decoupling capturing and processing, the app stays perfectly smooth. When a detection is made, the result is handed off to the <code>WebSocketServer</code>, which then shouts the update to the in-game overlay.
             </p>
 
-            <img src="/src/assets/riftrecon/uml.png" alt="UML diagram showing Rift Recon system architecture" class="blog-image">
+            <img src="../riftrecon/uml.png" alt="UML diagram showing Rift Recon system architecture" class="blog-image">
             <div class="image-caption">
                 Complete UML diagram 
             </div>
@@ -373,7 +373,7 @@
                 This queue acts as a simple, effective buffer that decouples the two threads, allowing them to work at their own pace without ever blocking each other.
             </p>
             
-            <img src="/src/assets/riftrecon/producerconsumer.png" alt="Producer-Consumer pattern visualization" class="blog-image">
+            <img src="../riftrecon/producerconsumer.png" alt="Producer-Consumer pattern visualization" class="blog-image">
             <div class="image-caption">
                 Producer-Consumer pattern in action
             </div>
@@ -397,13 +397,13 @@
             
             <div style="display: flex; gap: 2rem; justify-content: center; align-items: flex-start; margin: 2rem 0; flex-wrap: wrap;">
                 <div style="text-align: center;">
-                    <img src="/src/assets/riftrecon/template_original.png" alt="Aatrox original template" style="width: 150px; height: 150px; border-radius: 0.5rem; border: 2px solid #333;">
+                    <img src="../riftrecon/template_original.png" alt="Aatrox original template" style="width: 150px; height: 150px; border-radius: 0.5rem; border: 2px solid #333;">
                     <div class="image-caption" style="margin-top: 0.5rem; margin-bottom: 0;">
                         Aatrox original template (source: Riot Games)
                     </div>
                 </div>
                 <div style="text-align: center;">
-                    <img src="/src/assets/riftrecon/template_masked.png" alt="Aatrox masked template" style="width: 150px; height: 150px; border-radius: 0.5rem; border: 2px solid #333;">
+                    <img src="../riftrecon/template_masked.png" alt="Aatrox masked template" style="width: 150px; height: 150px; border-radius: 0.5rem; border: 2px solid #333;">
                     <div class="image-caption" style="margin-top: 0.5rem; margin-bottom: 0;">
                         Aatrox masked template
                     </div>
@@ -413,7 +413,7 @@
             <ul>
                 <li>
                     <strong>The "ID Check" (<span class="tech-term">Histogram Validation</span>):</strong> A shape match isn't enough. For every potential candidate, the system performs a second check. It calculates the <span class="tech-term">hue histogram</span> of the detected patch and compares it to the champion's pre-computed histogram using the <span class="tech-term">Bhattacharyya distance</span> method. If the color "DNA" doesn't match, the detection is rejected. This single step is the hero of the system, eliminating the vast majority of false positives.
-                    <img src="/src/assets/riftrecon/hist_plot.png" alt="1D Hue Histogram plot for Aatrox's template" class="blog-image">
+                    <img src="../riftrecon/hist_plot.png" alt="1D Hue Histogram plot for Aatrox's template" class="blog-image">
                     <div class="image-caption">
                         The plot shows Aatrox's color DNA: mostly deep reds (bins 0 & 15), some dark blues (bins 8-11), and no greens.
                     </div>
@@ -433,7 +433,7 @@
                 </li>
             </ul>
             
-            <img src="/src/assets/riftrecon/candidate.png" alt="Champion candidate detection visualization" class="blog-image">
+            <img src="../riftrecon/candidate.png" alt="Champion candidate detection visualization" class="blog-image">
             <div class="image-caption">
                 Champion in candidate state 
             </div>
@@ -444,7 +444,7 @@
                 </li>
             </ul>
             
-            <img src="/src/assets/riftrecon/tracked.png" alt="Champion being actively tracked" class="blog-image">
+            <img src="../riftrecon/tracked.png" alt="Champion being actively tracked" class="blog-image">
             <div class="image-caption">
                 Champion being actively tracked with KCF tracker
             </div>
@@ -461,7 +461,7 @@
                     geometry and pre-defined regions, the system classifies the champion's position into 
                     game-relevant zones like "Top Lane," "Bot River," or "Enemy Red Buff."
                     
-                    <img src="/src/assets/riftrecon/regions.png" alt="Position classification regions on minimap" class="blog-image">
+                    <img src="../riftrecon/regions.png" alt="Position classification regions on minimap" class="blog-image">
                     <div class="image-caption">
                         Pre-defined regions (it's a mess ik :D)
                     </div>
@@ -500,7 +500,7 @@
                 My C++ backend pushes <span class="tech-term">JSON</span> updates over a <span class="tech-term">WebSocket</span>, and the JavaScript in the overlay listens for those events to manage notifications. To keep the UI clean and prevent clutter, notifications are handled in a queue. Up to <strong>five recent events</strong> are stored, with each alert displaying on-screen for just **three seconds** before fading out. This ensures the player gets timely information without it becoming a distraction.
             </p>
             
-            <img src="/src/assets/riftrecon/overlay.png" alt="In-game overlay showing champion detection notifications" class="blog-image">
+            <img src="../riftrecon/overlay.png" alt="In-game overlay showing champion detection notifications" class="blog-image">
             <div class="image-caption">
                 The in-game overlay
             </div>
@@ -513,7 +513,7 @@
             </p>
             
             <video autoplay loop muted class="blog-image" style="max-width: 800px;">
-                <source src="/src/assets/riftrecon/final.mp4" type="video/mp4">
+                <source src="../riftrecon/final.mp4" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
             <div class="image-caption">
