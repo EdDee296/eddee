@@ -549,6 +549,12 @@
                     <br>
                     <strong>Solution:</strong> Using the <span class="tech-term">Overwolf platform</span>. It's a sanctioned framework that lets me safely render a web-based (<span class="tech-term">HTML/JS</span>) UI on top of the game without modifying any game files.
                 </li>
+                
+                <li>
+                    <strong>Challenge: Eliminating memory leaks and ensuring thread safety</strong>
+                    <br>
+                    <strong>Solution:</strong> Modern C++ techniques. By using <span class="tech-term">smart pointers</span> and following the <span class="tech-term">RAII principle</span> (Resource Acquisition Is Initialization), I can avoid manual memory management. Meanwhile, thread safety was handled by using <span class="tech-term">atomic variables</span> for simple state management. This combo eliminated most crash-prone bugs.
+                </li>
             </ul>
 
             <h3 id="future">5.2 Limitations & Future Work</h3>
