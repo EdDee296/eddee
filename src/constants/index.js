@@ -169,7 +169,7 @@ const experiences = [
 
 const blogPosts = [
     {
-      title: 'How I created a "Cheat" for Leageue of Legends',
+      title: 'How I created a "Cheat" for League of Legends',
       description: "A computer vision tool that analyzes League of Legends gameplay in real-time to detect, track, and report enemy champion movements on the minimap, providing tactical positioning information through a WebSocket interface.",
       link: "/blog/rift-recon.html", 
       isExternal: false
