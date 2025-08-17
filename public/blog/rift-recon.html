@@ -217,7 +217,7 @@
             </p>
 
             <p>
-                So, I decided to build myself a teammate—a bot whose only job is to stare at the minimap for me, 24/7. This project, <strong>Rift Recon</strong>, is a real-time computer vision tool I built in C++ that acts as that dedicated map-watcher. It uses <span class="tech-term">OpenCV</span> to detect and track enemy champions, then calls out their positions to an in-game overlay via a <span class="tech-term">WebSocket</span> interface.
+                So, I decided to build myself a teammate - a bot whose only job is to stare at the minimap for me, 24/7. This project, <strong>Rift Recon</strong>, is a real-time computer vision tool I built in <span class="tech-term">C++</span> that acts as that dedicated map-watcher. It uses <span class="tech-term">OpenCV</span> to detect and track enemy champions, then calls out their positions to an in-game overlay via a <span class="tech-term">WebSocket</span> interface.
             </p>
 
             <p>
@@ -275,7 +275,7 @@
 
             <h3 id="macro">1.1 The Solution Architecture (The "Macro" View)</h3>
             <p>
-                Initially, everything lived in one giant <code>main.cpp</code> file. It worked—until it didn't. As the project grew, 
+                Initially, everything lived in one giant <code>main.cpp</code> file. It worked - until it didn't. As the project grew, 
                 things got messy fast, so I restructured the system into a clean, modular design.
             </p>
 
@@ -283,7 +283,7 @@
             <ul>
                 <li>
                     <strong><code>RiftRecon-Core</code>:</strong> 
-                    A static library (<code>.lib</code>) that contains the main logic—frame analysis, champion tracking, and WebSocket communication.
+                    A static library (<code>.lib</code>) that contains the main logic - frame analysis, champion tracking, and WebSocket communication.
                 </li>
                 <li>
                     <strong><code>RiftRecon-App</code>:</strong> 
@@ -307,7 +307,7 @@
             <h3 id="meso">1.2 The Core Library Architecture (The "Meso" View)</h3>
 
             <p>
-                Inside the "Brain" (our <code>RiftRecon-Core</code> library), I didn't want chaos. I used Object-Oriented Programming to assign clear roles, like assembling a team of specialists. The main boss is the <code>ApplicationController</code> class. It acts as the conductor of an orchestra—it doesn't play an instrument itself, but it initializes and coordinates all the other major components to make sure they work in harmony.
+                Inside the "Brain" (our <code>RiftRecon-Core</code> library), I didn't want chaos. I used Object-Oriented Programming to assign clear roles, like assembling a team of specialists. The main boss is the <code>ApplicationController</code> class. It acts as the conductor of an orchestra - it doesn't play an instrument itself, but it initializes and coordinates all the other major components to make sure they work in harmony.
             </p>
 
             <p>
@@ -364,7 +364,7 @@
 
             <h4>The Producer-Consumer Queue</h4>
             <p>
-                As I mentioned in the architecture section, the capture process runs on its own thread—the "Watcher." This thread's job is to feed frames to the "Thinker" (the processing thread). To do this safely and efficiently, I implemented a classic <strong>Producer-Consumer pattern</strong>.
+                As I mentioned in the architecture section, the capture process runs on its own thread - the "Watcher." This thread's job is to feed frames to the "Thinker" (the processing thread). To do this safely and efficiently, I implemented a classic <strong>Producer-Consumer pattern</strong>.
             </p>
             <ul>
                 <li><strong>The Producer (Capture Thread):</strong> Captures and crops a frame, then pushes the resulting <code>cv::Mat</code> into a thread-safe, buffered queue. I kept the queue size small (around 3 frames) to keep memory usage low and ensure the data being processed is always fresh.</li>
@@ -392,7 +392,7 @@
             </p>
             <ul>
                 <li>
-                    <strong>The Quick Scan (<span class="tech-term">Template Matching</span>):</strong> First, the system performs a fast scan across the minimap using <span class="tech-term">TM_CCORR_NORMED</span> method (because it suports the use of masks). I use pre-loaded 30x30 pixel champion portraits, but with a trick: I apply a <span class="tech-term">circular mask</span> to each template. This forces the algorithm to focus only on the circular portrait area, ignoring noisy square corners and dramatically improving the initial match quality.
+                    <strong>The Quick Scan (<span class="tech-term">Template Matching</span>):</strong> First, the system performs a fast scan across the minimap using <span class="tech-term">TM_CCORR_NORMED</span> method (because it supports the use of masks). I use pre-loaded 30x30 pixel champion portraits, but with a trick: I apply a <span class="tech-term">circular mask</span> to each template. This forces the algorithm to focus only on the circular portrait area, ignoring noisy square corners and dramatically improving the initial match quality.
                 </li>
             </ul>
             
@@ -452,7 +452,7 @@
 
             <h3 id="positioning">3.3 Turning "Where" into "What" - Positioning and Alerts</h3>
             <p>
-                So far, the system can detect when an enemy champion appears on the minimap. But that alone isn't very useful. To provide real value, it must also determine and communicate <em>where</em> the enemy is—whether they're in mid lane, top lane, or roaming through the jungle.
+                So far, the system can detect when an enemy champion appears on the minimap. But that alone isn't very useful. To provide real value, it must also determine and communicate <em>where</em> the enemy is - whether they're in mid lane, top lane, or roaming through the jungle.
             </p>
 
             <ul>
@@ -471,7 +471,7 @@
                     <strong>Real-Time Notifications:</strong> Once the system knows both the <em>what</em> and the 
                     <em>where</em>, it sends a structured <span class="tech-term">JSON message</span> to the front-end through the 
                     <code>WebSocketServer</code>. To avoid overwhelming the player with redundant messages, it uses 
-                    <span class="tech-term">temporal filtering</span>—only pushing an alert when a champion's state 
+                    <span class="tech-term">temporal filtering</span> - only pushing an alert when a champion's state 
                     or general location has meaningfully changed.
                     
                     <p>Here's an example of a WebSocket message sent when a champion is detected:</p>
@@ -498,7 +498,7 @@
             </p>
 
             <p>
-                My C++ backend pushes <span class="tech-term">JSON</span> updates over a <span class="tech-term">WebSocket</span>, and the JavaScript in the overlay listens for those events to manage notifications. To keep the UI clean and prevent clutter, notifications are handled in a queue. Up to <strong>five recent events</strong> are stored, with each alert displaying on-screen for just **three seconds** before fading out. This ensures the player gets timely information without it becoming a distraction.
+                My <span class="tech-term">C++</span> backend pushes <span class="tech-term">JSON</span> updates over a <span class="tech-term">WebSocket</span>, and the JavaScript in the overlay listens for those events to manage notifications. To keep the UI clean and prevent clutter, notifications are handled in a queue. Up to <strong>five recent events</strong> are stored, with each alert displaying on-screen for just **three seconds** before fading out. This ensures the player gets timely information without it becoming a distraction.
             </p>
             
             <img src="../riftrecon/overlay.png" alt="In-game overlay showing champion detection notifications" class="blog-image">
@@ -528,7 +528,7 @@
 
             <ul>
                 <li>
-                    <strong>Challenge: In-game lag.</strong>
+                    <strong>Challenge: Application stuttering.</strong>
                     <br>
                     <strong>Solution:</strong> A <span class="tech-term">multi-threaded producer-consumer</span> design. A dedicated capture thread (using <span class="tech-term">DXGI</span>) feeds frames to a separate processing thread, ensuring the heavy OpenCV work never blocks the capture loop.
                 </li>
@@ -554,7 +554,7 @@
                 <li>
                     <strong>Challenge: Eliminating memory leaks and ensuring thread safety</strong>
                     <br>
-                    <strong>Solution:</strong> Modern C++ techniques. By using <span class="tech-term">smart pointers</span> and following the <span class="tech-term">RAII principle</span> (Resource Acquisition Is Initialization), I can avoid manual memory management. Meanwhile, thread safety was handled by using <span class="tech-term">atomic variables</span> for simple state management. This combo eliminated most crash-prone bugs.
+                    <strong>Solution:</strong> Modern <span class="tech-term">C++</span> techniques. By using <span class="tech-term">smart pointers</span> and following the <span class="tech-term">RAII principle</span> (Resource Acquisition Is Initialization), I can avoid manual memory management. Meanwhile, thread safety was handled by using <span class="tech-term">atomic variables</span> for simple state management. This combo eliminated most crash-prone bugs.
                 </li>
             </ul>
 
