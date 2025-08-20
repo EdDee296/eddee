@@ -38,6 +38,7 @@ import nxc from "./project/nxc.png";
 import cosmic from "./project/cosmic.png";
 import ayo from "./project/ayocatchem.png";
 import coiny from "./project/coiny.png";
+import lc from "./project/lc.png";
 
 export {
   logo,
@@ -67,6 +68,7 @@ export {
   coiny,
   cosmic,
   ayo,
+  lc,
   tae,
   forum,
   superstars,

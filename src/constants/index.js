@@ -13,9 +13,7 @@ import {
   tailwind,
   git,
   python,
-  tae,
-  forum,
-  vanloc,
+  lc,
   uofa,
   pre,
   aot,
@@ -264,6 +262,26 @@ const projects = [
     ],
     image: nxc,
     source_code_link: "https://github.com/EdDee296/NxC",
+  },
+  {
+    name: "LeetCode Problem Picker",
+    description: "A Chrome extension for picking LeetCode problems from spreadsheets.",
+    tags: [
+      {
+        name: "javascript",
+        color: "blue-text-gradient",
+      },
+      {
+        name: "HTML",
+        color: "green-text-gradient",
+      },
+      {
+        name: "CSS",
+        color: "text-amber-400",
+      },
+    ],
+    image: lc,
+    source_code_link: "https://github.com/EdDee296/leetcode-problem-picker",
   },
   {
     name: "Pre",
